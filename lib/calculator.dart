@@ -1,4 +1,7 @@
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
+import 'package:clipboard_manager/clipboard_manager.dart';
 
 var items = [
   ['Pasta', 6],
@@ -34,9 +37,17 @@ class CreateButton extends StatelessWidget {
       print('button pressed');
       stock[index][1] = number;
       print(stock);
-      int itemsVar = items[index][1];
-      int stockVar = stock[index][1];
-      order[index][1] = itemsVar - stockVar;
+      var itemsVar = items[index][1].toString();
+      var stockVar = stock[index][1].toString();
+
+      try {
+        order[index][1] = int.parse(itemsVar) - int.parse(stockVar);
+      } on FormatException {
+        print('format error');
+        order[index][1] = int.parse(itemsVar) -
+            2; // get errorInvalid radix-10 number (at character 1), for number 2
+
+      }
       print(order);
     }
 
@@ -90,6 +101,40 @@ class Calculator extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      bottomNavigationBar: new Theme(
+        data: Theme.of(context).copyWith(
+            // sets the background color of the `BottomNavigationBar`
+            canvasColor: const Color(0xFF212121),
+            // sets the active color of the `BottomNavigationBar` if `Brightness` is light
+            primaryColor: const Color(0xFF185ABB),
+            textTheme: Theme.of(context)
+                .textTheme
+                .copyWith(caption: new TextStyle(color: Colors.white))),
+        child: BottomNavigationBar(
+          items: const <BottomNavigationBarItem>[
+            BottomNavigationBarItem(
+              icon: Icon(
+                Icons.fastfood,
+              ),
+              title: Text('Calculator'),
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(
+                Icons.settings,
+              ),
+              title: Text('Settings'),
+            ),
+          ],
+        ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          ClipboardManager.copyToClipBoard("your text to copy");
+          print('copied');
+        },
+        backgroundColor: const Color(0xFF185ABB),
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       backgroundColor: Colors.black,
       body: Column(
         children: [
