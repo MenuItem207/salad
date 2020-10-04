@@ -5,6 +5,10 @@ var items = [
   ['Brown', 3, 'main'],
   ['Thai', 2, 'main'],
   ['Soba', 4, 'main'],
+  ['Item', 2],
+  ['Item', 2],
+  ['Item', 2],
+  ['Item', 2],
 ];
 
 var stock = [

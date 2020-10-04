@@ -43,6 +43,7 @@ class CreateButton extends StatelessWidget {
       child: Container(
         height: 75,
         child: RaisedButton(
+          elevation: 0,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(10),
             //side: BorderSide(color: Colors.white),
@@ -51,7 +52,7 @@ class CreateButton extends StatelessWidget {
           textColor: Colors.white,
           child: Text(
             number,
-            style: TextStyle(fontSize: 20),
+            style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
           ),
           onPressed: buttonPressed,
         ),
@@ -60,14 +61,19 @@ class CreateButton extends StatelessWidget {
   }
 }
 
+// change buttonNumber to change number of buttons
 Widget createButtonList(int buttonNumber, itemIndex) {
   return ListView.builder(
+      physics: BouncingScrollPhysics(),
       scrollDirection: Axis.horizontal,
       shrinkWrap: true,
       itemCount: buttonNumber,
       itemBuilder: (context, index) {
         String indexString = (index + 1).toString();
-        return CreateButton(indexString, itemIndex);
+        return Padding(
+          padding: const EdgeInsets.all(1),
+          child: CreateButton(indexString, itemIndex),
+        );
       });
 }
 
@@ -142,6 +148,7 @@ class Calculator extends StatelessWidget {
           Expanded(
             flex: 4,
             child: ListView.builder(
+              physics: BouncingScrollPhysics(),
               scrollDirection: Axis.vertical,
               shrinkWrap: true,
               itemCount: items.length,
