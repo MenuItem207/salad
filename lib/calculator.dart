@@ -1,26 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:clipboard_manager/clipboard_manager.dart';
-
-var items = [
-  ['Pasta', 6, 'main'],
-  ['Brown', 3, 'main'],
-  ['Thai', 2, 'main'],
-  ['Soba', 4, 'main'],
-];
-
-var stock = [
-  ['Pasta', 0, 'main'],
-  ['Brown', 0, 'main'],
-  ['Thai', 0, 'main'],
-  ['Soba', 0, 'main'],
-];
-
-var order = [
-  ['Pasta', 0, 'main'],
-  ['Brown', 0, 'main'],
-  ['Thai', 0, 'main'],
-  ['Soba', 0, 'main'],
-];
+import './info.dart';
 
 String clipboardFormat() {
   var clipboardText = [
@@ -40,8 +20,6 @@ String clipboardFormat() {
   }
   return clipboardString;
 }
-
-int itemsLength = items.length;
 
 class CreateButton extends StatelessWidget {
   final int index;
@@ -66,10 +44,10 @@ class CreateButton extends StatelessWidget {
         height: 75,
         child: RaisedButton(
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(3),
+            borderRadius: BorderRadius.circular(10),
             //side: BorderSide(color: Colors.white),
           ),
-          color: const Color(0xFF303236),
+          color: const Color(0xFF1859BB), //(0xFF303236),
           textColor: Colors.white,
           child: Text(
             number,
@@ -82,6 +60,17 @@ class CreateButton extends StatelessWidget {
   }
 }
 
+Widget createButtonList(int buttonNumber, itemIndex) {
+  return ListView.builder(
+      scrollDirection: Axis.horizontal,
+      shrinkWrap: true,
+      itemCount: buttonNumber,
+      itemBuilder: (context, index) {
+        String indexString = (index + 1).toString();
+        return CreateButton(indexString, itemIndex);
+      });
+}
+
 class CreateSection extends StatelessWidget {
   final int itemIndex;
 
@@ -92,20 +81,16 @@ class CreateSection extends StatelessWidget {
     return Column(
       children: [
         Padding(
-          padding: const EdgeInsets.all(20.0),
+          padding: const EdgeInsets.all(15.0),
           child: Text(
             items[itemIndex][0].toString(),
-            style: TextStyle(color: Colors.white, fontSize: 30),
+            style: TextStyle(
+                color: Colors.white, fontSize: 40, fontWeight: FontWeight.bold),
           ),
         ),
         Expanded(
           flex: 4,
-          child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-            CreateButton('1', itemIndex),
-            CreateButton('2', itemIndex),
-            CreateButton('3', itemIndex),
-            CreateButton('4', itemIndex),
-          ]),
+          child: createButtonList(9, itemIndex),
         ),
       ],
     );
@@ -166,8 +151,11 @@ class Calculator extends StatelessWidget {
                   child: Padding(
                     padding: const EdgeInsets.all(0.1),
                     child: Card(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(15.0),
+                      ),
                       child: CreateSection(index),
-                      color: const Color(0xFF212121),
+                      color: const Color(0xFF1859BB), //212121),
                     ),
                   ),
                 );
