@@ -86,8 +86,10 @@ class CreateSection extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Padding(
-          padding: const EdgeInsets.all(15.0),
+        Container(
+          margin: const EdgeInsets.only(
+            top: 30,
+          ),
           child: Text(
             items[itemIndex][0].toString(),
             style: TextStyle(
@@ -153,16 +155,20 @@ class Calculator extends StatelessWidget {
               shrinkWrap: true,
               itemCount: items.length,
               itemBuilder: (context, index) {
-                return Container(
-                  height: 180,
-                  child: Padding(
-                    padding: const EdgeInsets.all(0.1),
-                    child: Card(
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(15.0),
+                return Align(
+                  alignment: Alignment.center,
+                  child: Container(
+                    height: 180,
+                    width: 370,
+                    child: Padding(
+                      padding: const EdgeInsets.all(0.1),
+                      child: Card(
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(15.0),
+                        ),
+                        child: CreateSection(index),
+                        color: const Color(0xFF1859BB), //212121),
                       ),
-                      child: CreateSection(index),
-                      color: const Color(0xFF1859BB), //212121),
                     ),
                   ),
                 );
